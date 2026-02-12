@@ -180,10 +180,10 @@ HTML_TEMPLATE = '''
                 <input type="file" id="fileInput" class="file-input" accept=".xls,.xlsx">
                 <div style="margin-top: 20px;">
                     <label style="display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
-                        <input type="checkbox" id="aggregateCheckbox" style="width: 18px; height: 18px; cursor: pointer;">
-                        <span style="font-size: 14px; font-weight: 600;">Aggregate by SKU</span>
+                        <input type="checkbox" id="noAggregateCheckbox" style="width: 18px; height: 18px; cursor: pointer;">
+                        <span style="font-size: 14px; font-weight: 600;">Keep all line items (no aggregation)</span>
                     </label>
-                    <p style="margin-top: 5px; color: #666; font-size: 12px;">Combine duplicate SKUs and sum quantities/values</p>
+                    <p style="margin-top: 5px; color: #666; font-size: 12px;">Uncheck to aggregate duplicate SKUs by default</p>
                 </div>
             </div>
             
@@ -294,9 +294,9 @@ HTML_TEMPLATE = '''
             const formData = new FormData();
             formData.append('file', file);
             
-            // Add aggregate flag
-            const aggregateCheckbox = document.getElementById('aggregateCheckbox');
-            if (aggregateCheckbox && aggregateCheckbox.checked) {
+            // Aggregate by default unless "no aggregation" is checked
+            const noAggregateCheckbox = document.getElementById('noAggregateCheckbox');
+            if (!noAggregateCheckbox || !noAggregateCheckbox.checked) {
                 formData.append('aggregate', 'true');
             }
             
